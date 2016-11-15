@@ -13,9 +13,6 @@ http.createServer(function(req, res) {
     }
 
     sendFileSafe(url.parse(req.url).pathname, res);
-
-
-
 }).listen(3000);
 
 function checkAccess(req) {
@@ -23,9 +20,6 @@ function checkAccess(req) {
 }
 
 function sendFileSafe(filePath, res) {
-
-
-
     try {
         filePath = decodeURIComponent(filePath);
     } catch(e) {
@@ -33,7 +27,6 @@ function sendFileSafe(filePath, res) {
         res.end('Bad request');
         return;
     }
-
 
     if (~filePath.indexOf('\0')) {
         res.statusCode = 400;
@@ -43,20 +36,11 @@ function sendFileSafe(filePath, res) {
 
     filePath = path.normalize(path.join(ROOT, filePath));
 
-    console.log(filePath);
-    console.log(ROOT);
-    console.log(filePath.indexOf(ROOT));
-
-
     if (filePath.indexOf(ROOT) != 0) {
         res.statusCode = 404;
         res.end('File not found');
         return;
     }
-
-
-
-
 
     fs.stat(filePath, function(err, stats) {
         if (err || !stats.isFile()) {
